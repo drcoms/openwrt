@@ -142,7 +142,12 @@
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
+        <div class="container">
+			<button class="btn btn-primary" onclick="javascript:window.location.href='/drcom/static/setdrcom.html?password=' + GetURLParameter('password')">客户端设置</button>
+<button class="btn btn-primary" onclick="javascript:window.location.href='/drcom/static/env.html?password=' + GetURLParameter('password')">运行环境检查</button>
+<button class="btn btn-primary" onclick="javascript:restartclient();">重启客户端</button>
 
+        </div>
       </div>
     </div>
     <div class="container">
