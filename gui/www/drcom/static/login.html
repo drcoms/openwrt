@@ -81,7 +81,7 @@
         success: function(json) {
 		  if (json.result == 'success') {
 				document.getElementById('alertMsg').innerHTML="<div class='alert alert-info'>您没有修改默认密码,默认密码为 123456</div>";
-				location.href = "setdrcom.html?password="+$("#password").val();			  
+				//location.href = "setdrcom.html?password="+$("#password").val();			  
 		  }
 		},
           error: function(error) {
