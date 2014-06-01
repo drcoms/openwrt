@@ -1,0 +1,41 @@
+#!/usr/bin/python
+#coding=utf-8
+import sys
+import os
+import json
+import drcom
+
+
+drcom.check_login()
+
+#static
+
+# python version
+pyver = sys.version.split()[0]
+
+try:
+    import urllib2
+    pyurllib2 = urllib2.__version__
+except:
+    pyurllib2 = False
+
+dog_drcom = os.path.exists('/usr/bin/dog_drcom')
+wired = os.path.exists('/usr/bin/wired.py')
+conf = os.path.exists('/etc/drcom.conf')
+
+
+run_dog_drcom = int(os.popen('ps | grep dog_drcom | wc -l').read()) >= 3
+run_wired = int(os.popen('ps | grep wired.py | wc -l').read()) >= 3
+
+
+data = {'result':'success',
+        'pyver':pyver,
+        'pyurllib2':pyurllib2,
+        'dog_drcom':'正常' if dog_drcom else False,
+        'wired':'正常' if wired else False,
+        'conf':'存在' if conf else False,
+        'run_dog_drcom':'正在运行' if run_dog_drcom else False,
+        'run_wired':'正在运行' if run_wired else False}
+
+
+print drcom.printdata(data)

@@ -1,0 +1,26 @@
+#!/usr/bin/python
+
+import sys
+import drcom
+import drcom
+
+
+drcom.check_login()
+
+def format_mac(s):
+    s = str(hex(s))
+    return s[2:].replace('L','')
+    
+execfile('/etc/drcom.conf')
+
+data = {'username':username,
+	'password':password,
+	'result':'success',
+	'svr':server,
+	'host_name':host_name,
+	'host_os':host_os,
+    'host_ip':host_ip,
+	'dhcp_svr':dhcp_server,
+	'mac':format_mac(mac)}
+
+print drcom.printdata(data)

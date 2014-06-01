@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+
+    <title>DrCOM管理后台</title>
+	<script type="text/javascript">
+			function GetURLParameter(sParam)
+		{
+			var sPageURL = window.location.search.substring(1);
+			var sURLVariables = sPageURL.split('&');
+			for (var i = 0; i < sURLVariables.length; i++) 
+			{
+				var sParameterName = sURLVariables[i].split('=');
+				if (sParameterName[0] == sParam) 
+				{
+					return sParameterName[1];
+				}
+			}
+		}
+	</script>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-select.min.css">
+    <link type="text/css" href="css/style.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+	function getdrcom() {
+		var password = GetURLParameter('password');
+        $.ajax({
+          type: "GET", 
+          url: "/cgi-bin/getdrcom?password=" + password,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          success: function(json) {
+			  if (json.result == 'success') {
+		      $('#svr').val(json.svr);
+              $('#username').val(json.username);
+              $('#password').val(json.password);
+              $('#host_name').val(json.host_name);
+              $('#host_os').val(json.host_os);
+              $('#host_ip').val(json.host_ip);
+              $('#dhcp_svr').val(json.dhcp_svr);
+              $('#mac').val(json.mac);
+              $('#sys_pass').val(password);
+			  }
+			  else{
+				location.href = "/drcom/static/login.html";			  
+				}
+             
+          },
+          error: function(error) {
+            alert("调用出错" + error.responseText);
+          }
+        });
+	}
+	function restartclient() {
+        $.ajax({
+          type: "GET", 
+          url: "/cgi-bin/rebootdrcom?password=" + GetURLParameter('password'),
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          success: function(json) {
+              if (json.result=="success") {
+				  document.getElementById('alertMsg').innerHTML="<div class='alert alert-info'>客户端已重启, 请等待几秒后查询状态</div>"
+              }
+              else {
+				  document.getElementById('alertMsg').innerHTML="<div class='alert alert-danger'>重启失败,"+ json.message +"</div>"
+              }
+          },
+          error: function(error) {
+            document.getElementById('alertMsg').innerHTML="<div class='alert alert-danger'>重启失败</div>"
+          }
+        });
+	}
+    function checkdrcom() {
+		var password = GetURLParameter('password');
+        $.ajax({
+          type: "GET", 
+          url: "/cgi-bin/checkdrcom?password=" + password,
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          success: function(json) {
+              if (json.result=="success") {
+				  $("#status").addClass('alert-info');
+                  $("#status").text(json.message);
+              }
+              else {
+				$("#status").addClass('alert-danger');
+                $('#status').text(json.message)
+              }
+          },
+          error: function(error) {
+            alert("调用出错" + error.responseText);
+          }
+        });
+	}
+      function setdrcom() {
+        $.ajax({
+          type: "GET", 
+          url: "/cgi-bin/setdrcom?svr="+$('#svr').val()+"&username="+$('#username').val()+"&dpassword="+$('#password').val()
+				+"&host_name="+$('#host_name').val()+"&host_os="+$('#host_os').val()+"&host_ip="+$('#host_ip').val()
+				+"&dhcp_svr="+$('#dhcp_svr').val()+"&mac="+$('#mac').val()+"&password="+GetURLParameter('password')
+				+"&sys_pass="+$('#sys_pass').val(),
+          dataType: "json",
+          contentType: "application/json; charset=utf-8",
+          success: function(json) {
+			  //document.getElementById('alertMsg').innerHTML="<div class='alert alert-danger'>失败</div>"
+              if (json.result == "error") {
+				document.getElementById('alertMsg').innerHTML="<div class='alert alert-danger'>" + json.message + "</div>"
+                //$('#alertMsg').innerHTML="<div class='alert alert-danger'>" + json.message + "</div>";
+              }
+              
+              if (json.result == "success") {
+				document.getElementById('alertMsg').innerHTML="<div class='alert alert-info'>修改成功</div>"
+				getdrcom()
+                //$('#alertMsg').innerHTML="<div class='alert alert-info'>修改成功</div>";
+              }
+          },
+          error: function(error) {
+              $('#alertMsg').innerHTML="<div class='alert alert-danger'>失败</div>";
+          }
+        });
+        return false;
+      }
+    </script>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <div class="panel panel-default">
+            <div class="panel-body" id="status">
+              正在检查客户端状态...
+            </div>
+          </div>
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="javascript:window.location.href='/drcom/static/setdrcom.html?password=' + GetURLParameter('password')">客户端设置</a></li>
+            <li class="inactive"><a href="javascript:window.location.href='/drcom/static/env.html?password=' + GetURLParameter('password')">运行环境检查</a></li>
+            <li class="inactive"><a href="javascript:restartclient();">重启客户端</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div id="alertMsg"></div>
+            <form action="#" method="post" onsubmit="return setdrcom();" class="well">
+            <fieldset>
+              <legend>设置 DrCOM 客户端信息</legend>
+              <div class="form-group">
+				<label for="svr">认证服务器(*)</label>
+                <input id="svr" name="svr" class="form-control"/>         
+                <label for="username">用户名(*)</label>
+                <input id="username" name="username" class="form-control"/>  
+                <label for="password">密码(*)</label>
+                <input id="password" type="password" name="password" class="form-control"/>  
+                <label for="host_name">主机名</label>
+                <input id="host_name" name="host_name" class="form-control"/>
+                <label for="host_os">主机系统</label>
+                <input id="host_os" name="host_os" class="form-control"/>
+                <label for="host_ip">绑定IP</label>
+                <input id="host_ip" name="host_ip" class="form-control"/>  
+                <label for="dhcp_svr">DHCP服务器</label>
+                <input id="dhcp_svr" name="dhcp_svr" class="form-control"/>
+                <label for="mac">绑定mac(*)</label>
+                <input id="mac" name="mac" class="form-control"/>
+                <label for="sys_pass">修改管理密码</label>
+                <input id="sys_pass" name="mac" class="form-control"/>
+              </div>
+
+              <div style="margin: 20px 0;">
+                <button type="submit" class="btn btn-primary">保存</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </body>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/docs.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-select.min.js"></script>
+  <script type="text/javascript">
+		
+		
+      $(window).on('load', function () {
+		var password = GetURLParameter('password');
+        getdrcom();
+        checkdrcom();
+
+      });
+  </script>
+</html>

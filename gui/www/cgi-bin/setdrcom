@@ -1,0 +1,61 @@
+#!/usr/bin/python
+#coding=utf-8
+import sys
+import drcom
+import os
+
+drcom.check_login()
+
+try:
+    recv = drcom.get_args()
+
+    err_msg = ''
+
+
+    dpassword = recv['dpassword']
+    mac = recv['mac'].replace('0x','').replace(':','').replace('-','')
+
+    if len(mac) != 12:
+        err_msg += 'MAC 地址格式不正确, 请不要输入除字母和数字外的其他字符 \n';
+
+    if len(dpassword) >= 16:
+        err_msg += "密码最大长度不能超过 16"
+
+    error = {'result':'error',
+            'message':err_msg
+            }
+
+    data = {'result':'success'}
+
+    if err_msg != '':
+        data = error
+    else:
+        conf_template = """
+server = "{server}" # Auth server ip
+username = "{username}"
+password = "{password}"
+host_name = "{host_name}"
+host_os = "{host_os}"
+host_ip = "{host_ip}" # your ip 
+dhcp_server = "{dhcp_server}"
+mac = 0x{mac}
+sys_pass = "{sys_pass}"
+        """
+        # writing conf to drcom.com
+        with open('/etc/drcom.conf','w') as f:
+            f.write(conf_template.format(server=recv['svr'], username=recv['username'], password=recv['dpassword'],
+                                         host_name=recv['host_name'], host_os=recv['host_os'], host_ip=recv['host_ip'],
+                                         dhcp_server=recv['dhcp_svr'], mac=mac, sys_pass=recv['sys_pass']))
+            
+    """
+    # /etc/inittab
+    if os.path.exists('/etc/inittab'):
+        with open('/etc/inittab','r+') as f:
+            if '::respawn:/usr/bin/dog_drcom' not in f.read():
+                f.write('\n%s\n' % '::respawn:/usr/bin/dog_drcom')
+    """
+except:
+    data = {'result':'error','message':'arguments not complete'}
+
+
+print drcom.printdata(data)

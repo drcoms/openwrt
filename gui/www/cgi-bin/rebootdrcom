@@ -1,0 +1,23 @@
+#!/usr/bin/python
+#coding=utf-8
+import sys
+import os
+import json
+import subprocess
+import drcom
+
+drcom.check_login()
+
+try:
+
+    dog_drcom = int(os.popen('ps | grep dog_drcom | wc -l').read().strip())
+
+    os.popen('kill -9 `ps | grep wired.py | grep python | awk \'{print $1}\'`')
+
+    if dog_drcom < 3:
+        subprocess.Popen(['dog_drcom'])
+
+    data = {'result':'success'}
+except:
+    data = {'result':'error','message':'未知错误,请检查运行环境'}
+print drcom.printdata(data)
