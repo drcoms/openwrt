@@ -24,8 +24,8 @@ wired = os.path.exists('/usr/bin/wired.py')
 conf = os.path.exists('/etc/drcom.conf')
 
 
-run_dog_drcom = int(os.popen('ps | grep dog_drcom | wc -l').read()) >= 3
-run_wired = int(os.popen('ps | grep wired.py | wc -l').read()) >= 3
+run_dog_drcom = int(os.popen('ps | egrep "dog_drcom$" | wc -l').read()) >= 1
+run_wired = int(os.popen('ps | egrep "wired.py$" | wc -l').read()) >= 1
 
 
 data = {'result':'success',

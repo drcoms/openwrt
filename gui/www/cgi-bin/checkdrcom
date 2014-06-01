@@ -13,7 +13,7 @@ except:
 
 drcom.check_login()
 
-run_wired = int(os.popen('ps | grep wired.py | wc -l').read()) >= 3 
+run_wired = int(os.popen('ps | egrep "wired.py$" | wc -l').read()) >= 1
 internet = True
 
 try:
