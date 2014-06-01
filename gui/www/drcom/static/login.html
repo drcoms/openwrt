@@ -75,13 +75,13 @@
       $(window).on('load', function () {
         $.ajax({
           type: "GET", 
-          url: "/cgi-bin/getdrcom?password=admin",
+          url: "/cgi-bin/getdrcom?password=123456",
           dataType: "json",
           contentType: "application/json; charset=utf-8",
         success: function(json) {
 		  if (json.result == 'success') {
-				document.getElementById('alertMsg').innerHTML="<div class='alert alert-info'>您没有修改默认密码,默认密码为 admin</div>";
-				location.href = "setwifi?password="+$("#password").val();			  
+				document.getElementById('alertMsg').innerHTML="<div class='alert alert-info'>您没有修改默认密码,默认密码为 123456</div>";
+				location.href = "setdrcom.html?password="+$("#password").val();			  
 		  }
 		},
           error: function(error) {
