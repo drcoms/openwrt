@@ -15,7 +15,7 @@ DrCOM客户端于Openwrt
 ```shell
 chmod +x /www/cgi-bin/*
 ```
-访问 http://路由器地址:管理端口/drcom/ , 默认密码是 123456, 可以登录后修改.
+访问 http://路由器地址/drcom/ , 默认密码是 123456, 可以登录后修改.
 
 该 GUI 做的比较简略,主要是方便修改.
 

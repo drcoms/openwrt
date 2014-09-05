@@ -1,10 +1,11 @@
-实验性 GUI 
+drcomclient-GUI 
 ---------------
 
 * 所有基于 Openwrt 的系统都可以用
 * 本 GUI 的前提是已经正确安装了客户端脚本
+* 注意剩余空间
 
-注意
+安装
 ---------------
-
-* python 的 json 库没有打包进去，可以自行拷贝 2.7.3 标准库中的json文件夹到 /usr/lib/python2.7/ 
+  1. 覆盖文件
+  2. chmod +x /www/drcom/*
