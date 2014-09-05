@@ -1,0 +1,20 @@
+#!/bin/sh
+
+while true
+do
+  if [ -f /var/run/jludrcom.pid ] ; then
+    JLUDRCOM=1
+    PID=`cat /var/run/jludrcom.pid`
+    RUNNING_STR=`grep python /proc/$PID/cmdline 2> /dev/null`
+    if [ -n "$RUNNING_STR" ] ; then
+      JLUDRCOM=0
+    fi
+    if [ $JLUDRCOM == 1 ]; then
+      python /usr/bin/wired.py & > /dev/null
+    fi
+    sleep 10
+  else
+    python /usr/bin/wired.py & > /dev/null
+    sleep 10
+  fi
+done
