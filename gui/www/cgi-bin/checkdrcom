@@ -27,6 +27,7 @@ if run_wired:
         message += ' 但无法连接外网'
     else:
         message += ' 外网连接正常'
+        result = "success"
 else:
     message = '客户端未运行'
 
