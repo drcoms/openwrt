@@ -30,7 +30,6 @@ run_wired = int(os.popen('ps | egrep "wired.py$" | wc -l').read()) >= 1
 
 data = {'result':'success',
         'pyver':pyver,
-        'pyurllib2':pyurllib2,
         'dog_drcom':'正常' if dog_drcom else False,
         'wired':'正常' if wired else False,
         'conf':'存在' if conf else False,
