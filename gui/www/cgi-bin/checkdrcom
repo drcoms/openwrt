@@ -4,12 +4,6 @@ import os
 import sys
 import json
 import drcom
-try:
-    import urllib2
-except:
-    data = {'result':'error','message':'必要库未安装'}
-    print drcom.printdata(data)
-    sys.exit(0)
 
 drcom.check_login()
 
