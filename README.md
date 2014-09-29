@@ -1,6 +1,8 @@
 DrCOM客户端于Openwrt
 =======
 
+*如果你愿意捐助作者这个穷屌, 支付宝: latyas@live.com*
+
 本补丁默认您掌握了以下技能
 
 * 基本 Linux 命令
