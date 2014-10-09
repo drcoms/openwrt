@@ -25,3 +25,8 @@ chmod +x /www/cgi-bin/*
 
 该 GUI 做的比较简略,主要是方便修改.
 
+# 许可证
+
+GPLv2
+
+特别指出禁止任何个人或者公司将 [drcoms](http://github.com/drcoms/) 的代码投入商业使用，由此造成的后果和法律责任均与本人无关。 
