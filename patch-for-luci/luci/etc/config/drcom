@@ -1,0 +1,11 @@
+
+config drcom 'config'
+	option server '0'
+	option cipher 'table'
+	option remote_server '10.100.61.3'
+	option username 'aaabbb'
+	option password 'cccddd'
+	option host_name 'MyPCGG'
+	option host_os 'DOS'
+	option iface 'eth0.1'
+
