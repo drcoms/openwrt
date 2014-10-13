@@ -11,15 +11,12 @@ local client_status = ""
 if drcom_running then	
 	client_status = client_status .. "客户端运行中"
 else
-	client_status = client_status .. "客户端未运行"
+	client_status = client_status .. "<font color=red>客户端未运行</font>"
 end
 if check_conn then
   client_status = client_status .. "，正常上网中"
 end
 m = Map("drcom", translate("DrCOM"), translate(client_status))
-
-connectivity = m:section(TypedSection, "drcom", translate("客户端配置"))
-connectivity.anonymous = true
 
 server = m:section(TypedSection, "drcom", translate("客户端配置"))
 server.anonymous = true
