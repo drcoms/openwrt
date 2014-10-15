@@ -3,6 +3,9 @@ DrCOM客户端于Openwrt
 
 *如果你愿意捐助作者这个穷屌, 支付宝: latyas@live.com*
 
+`/usr/bin/wired.py` 可能不是最新的，请访问<https://github.com/drcoms/generic/blob/master/latest-wired.py> 以获得最新代码
+
+
 本补丁默认您掌握了以下技能
 
 * 基本 Linux 命令
