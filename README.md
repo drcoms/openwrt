@@ -3,6 +3,8 @@ DrCOM客户端于Openwrt
 
 *如果你愿意捐助作者这个穷屌, 支付宝: latyas@live.com*
 
+强烈建议不要使用GUI，即不要将 `gui` 和 `patch-for-luci` 这两个文件夹拷进路由，取而代之的是修改好 `/etc/drcom.conf` 后就别折腾了。
+
 `/usr/bin/wired.py` 可能不是最新的，请访问<https://github.com/drcoms/generic/blob/master/latest-wired.py> 以获得最新代码
 
 
