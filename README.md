@@ -32,6 +32,6 @@ chmod +x /www/cgi-bin/*
 
 # 许可证
 
-GPLv2
+AGPLv3
 
 特别指出禁止任何个人或者公司将 [drcoms](http://github.com/drcoms/) 的代码投入商业使用，由此造成的后果和法律责任均与本人无关。 
